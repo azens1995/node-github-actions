@@ -13,15 +13,18 @@ jobs:
         uses: actions/setup-node@v3.8.1
         with:
           node-version: 19.9.0
+      - name: Setup TypeScript
+        uses: Tyler887/TypeScript-GitHub-Actions@1.0
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm run build
       - name: Create zip bundle
         run: |
-            cd src
-            zip -r ../${{ github.sha }}.zip .
+          cd dist
+          zip -r ../${{ github.sha }}.zip .
       - name: Archive artifact
         uses: actions/upload-artifact@v2
         with:
           name: zipped-bundle
           path: ${{ github.sha }}.zip
-      
